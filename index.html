@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KusiYuyay | Ciclo Sostenible de Salud y Economía</title>
+    <link rel="icon" type="image/png" href="image/logo.png" sizes="32x32">
+    <link rel="apple-touch-icon" href="assets/icono.png">
+    <meta name="description"
+        content="Combatir la anemia y mejorar la economía de familias en Saylla mediante la venta de productos ricos en hierro.">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            purple: '#8B5CF6',
+                            cyan: '#06B6D4',
+                            lime: '#D9F99D',
+                            dark: '#0F172A',
+                            surface: 'rgba(255, 255, 255, 0.05)'
+                        }
+                    },
+                    animation: {
+                        'blob': 'blob 7s infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Base Styles */
+        body {
+            background-color: #0F172A;
+            color: #F8FAFC;
+            overflow-x: hidden;
+        }
+
+        /* Liquid Gradient Background */
+        .liquid-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            overflow: hidden;
+            background: #0F172A;
+        }
+
+        .blob {
+            position: absolute;
+            filter: blur(80px);
+            opacity: 0.6;
+            animation: blob 10s infinite alternate;
+        }
+
+        .blob-1 {
+            top: -10%;
+            left: -10%;
+            width: 50vw;
+            height: 50vw;
+            background: #4C1D95;
+            animation-delay: 0s;
+        }
+
+        .blob-2 {
+            bottom: -10%;
+            right: -10%;
+            width: 50vw;
+            height: 50vw;
+            background: #0E7490;
+            animation-delay: 2s;
+        }
+
+        .blob-3 {
+            top: 40%;
+            left: 40%;
+            width: 40vw;
+            height: 40vw;
+            background: #3F6212;
+            opacity: 0.4;
+            animation-delay: 4s;
+        }
+
+        /* Glassmorphism */
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.2);
+        }
+
+        /* Neon Button */
+        .btn-neon {
+            background: linear-gradient(90deg, #8B5CF6, #06B6D4);
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .btn-neon::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, #06B6D4, #8B5CF6);
+            opacity: 0;
+            z-index: -1;
+            transition: opacity 0.3s ease;
+        }
+
+        .btn-neon:hover::before {
+            opacity: 1;
+        }
+
+        .btn-neon:hover {
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.5);
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0F172A;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569;
+        }
+
+        /* Parallax Elements */
+        .parallax-el {
+            position: absolute;
+            pointer-events: none;
+            z-index: 0;
+        }
+    </style>
+</head>
+
+<body class="antialiased selection:bg-cyan-500 selection:text-white">
+
+    <!-- Liquid Background -->
+    <div class="liquid-bg">
+        <div class="blob blob-1 rounded-full"></div>
+        <div class="blob blob-2 rounded-full"></div>
+        <div class="blob blob-3 rounded-full"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 transition-all duration-300" id="navbar">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#"
+                class="text-2xl font-bold tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-cyan-400">
+                KusiYuyay
+            </a>
+
+            <div class="flex items-center gap-6">
+                <!-- Mobile Menu Button (Hidden for simplicity in this demo, assuming desktop/mobile responsive grid) -->
+
+                <button onclick="toggleCart()"
+                    class="relative p-2 hover:bg-white/10 rounded-full transition-colors group">
+                    <i data-lucide="shopping-cart"
+                        class="w-6 h-6 text-white group-hover:text-cyan-400 transition-colors"></i>
+                    <span id="cart-count"
+                        class="absolute -top-1 -right-1 bg-cyan-500 text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full opacity-0 transition-opacity">0</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20" id="home">
+        <!-- Parallax Elements -->
+        <div class="parallax-el top-1/4 left-10 w-20 h-20 bg-purple-500/20 rounded-full blur-xl" data-speed="0.05">
+        </div>
+        <div class="parallax-el bottom-1/3 right-20 w-32 h-32 bg-cyan-500/20 rounded-full blur-xl" data-speed="0.08">
+        </div>
+        <div class="parallax-el top-1/2 left-1/3 w-4 h-4 bg-white/30 rounded-full" data-speed="0.15"></div>
+
+        <div class="container mx-auto px-6 relative z-10 text-center">
+            <div
+                class="inline-block mb-4 px-4 py-1.5 rounded-full glass border-cyan-500/30 text-cyan-300 text-sm font-medium tracking-wide animate-float">
+                ✨ Innovación Social en Saylla
+            </div>
+            <h1 class="text-5xl md:text-7xl font-extrabold mb-6 leading-tight">
+                Ciclo Sostenible de <br>
+                <span
+                    class="bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-cyan-400 to-lime-400">Salud
+                    y Economía</span>
+            </h1>
+            <p class="text-lg md:text-xl text-gray-300 max-w-2xl mx-auto mb-10 leading-relaxed">
+                Empoderando familias y combatiendo la anemia a través de productos orgánicos y ricos en hierro. Únete a
+                la revolución del bienestar.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#shop"
+                    class="btn-neon px-8 py-4 rounded-full font-bold text-white shadow-lg hover:scale-105 transition-transform">
+                    Comienza a Impactar
+                </a>
+                <a href="#how-it-works"
+                    class="px-8 py-4 rounded-full glass hover:bg-white/10 transition-colors font-medium">
+                    Cómo Funciona
+                </a>
+            </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce">
+            <i data-lucide="chevron-down" class="w-8 h-8 text-white/50"></i>
+        </div>
+    </section>
+
+    <!-- Shop Section -->
+    <section class="py-24 relative" id="shop">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4">Nuestros Productos</h2>
+                <p class="text-gray-400">Frescos, orgánicos y con propósito.</p>
+            </div>
+
+            <!-- Filters -->
+            <div class="flex flex-wrap justify-center gap-3 mb-12" id="filters">
+                <button onclick="filterProducts('all')"
+                    class="filter-btn active px-6 py-2 rounded-full glass text-sm font-medium hover:bg-white/10 transition-all border-cyan-500/50 text-cyan-300">Todos</button>
+                <button onclick="filterProducts('cuyes')"
+                    class="filter-btn px-6 py-2 rounded-full glass text-sm font-medium hover:bg-white/10 transition-all text-gray-300">Cuyes</button>
+                <button onclick="filterProducts('pollos')"
+                    class="filter-btn px-6 py-2 rounded-full glass text-sm font-medium hover:bg-white/10 transition-all text-gray-300">Pollos</button>
+                <button onclick="filterProducts('hortalizas')"
+                    class="filter-btn px-6 py-2 rounded-full glass text-sm font-medium hover:bg-white/10 transition-all text-gray-300">Hortalizas</button>
+                <button onclick="filterProducts('hierro')"
+                    class="filter-btn px-6 py-2 rounded-full glass text-sm font-medium hover:bg-white/10 transition-all text-gray-300">Ricos
+                    en Hierro</button>
+            </div>
+
+            <!-- Product Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8" id="product-grid">
+                <!-- Products will be injected via JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="py-24 relative overflow-hidden" id="how-it-works">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-20">
+                <h2 class="text-4xl font-bold mb-4">El Ciclo KusiYuyay</h2>
+                <p class="text-gray-400">Un modelo de economía circular y salud.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-12 relative">
+                <!-- Connecting Line (Desktop) -->
+                <div
+                    class="hidden md:block absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-0.5 h-full bg-gradient-to-b from-transparent via-cyan-500/50 to-transparent">
+                </div>
+
+                <!-- Flow 1 -->
+                <div class="glass rounded-3xl p-8 relative group hover:bg-white/5 transition-colors">
+                    <div
+                        class="absolute -top-6 left-8 w-12 h-12 bg-purple-600 rounded-2xl flex items-center justify-center shadow-lg shadow-purple-500/30">
+                        <i data-lucide="sprout" class="text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mt-4 mb-6 text-purple-300">Ciclo Económico</h3>
+                    <ul class="space-y-6 relative">
+                        <li class="flex items-start gap-4">
+                            <div
+                                class="w-8 h-8 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-400 font-bold text-sm shrink-0">
+                                1</div>
+                            <div>
+                                <h4 class="font-bold text-white">Producción Local</h4>
+                                <p class="text-sm text-gray-400">Familias de Saylla cultivan hortalizas y crían
+                                    animales.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-4">
+                            <div
+                                class="w-8 h-8 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-400 font-bold text-sm shrink-0">
+                                2</div>
+                            <div>
+                                <h4 class="font-bold text-white">Venta Digital</h4>
+                                <p class="text-sm text-gray-400">Los productos se suben a KusiYuyay para compradores
+                                    externos.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-4">
+                            <div
+                                class="w-8 h-8 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-400 font-bold text-sm shrink-0">
+                                3</div>
+                            <div>
+                                <h4 class="font-bold text-white">Ingreso Directo</h4>
+                                <p class="text-sm text-gray-400">El 100% de la ganancia va directo a las familias
+                                    productoras.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Flow 2 -->
+                <div class="glass rounded-3xl p-8 relative group hover:bg-white/5 transition-colors">
+                    <div
+                        class="absolute -top-6 left-8 w-12 h-12 bg-cyan-600 rounded-2xl flex items-center justify-center shadow-lg shadow-cyan-500/30">
+                        <i data-lucide="heart-pulse" class="text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mt-4 mb-6 text-cyan-300">Ciclo de Salud</h3>
+                    <ul class="space-y-6 relative">
+                        <li class="flex items-start gap-4">
+                            <div
+                                class="w-8 h-8 rounded-full bg-cyan-500/20 flex items-center justify-center text-cyan-400 font-bold text-sm shrink-0">
+                                1</div>
+                            <div>
+                                <h4 class="font-bold text-white">Reinversión</h4>
+                                <p class="text-sm text-gray-400">Con los ingresos, las familias adquieren productos
+                                    ricos en hierro.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-4">
+                            <div
+                                class="w-8 h-8 rounded-full bg-cyan-500/20 flex items-center justify-center text-cyan-400 font-bold text-sm shrink-0">
+                                2</div>
+                            <div>
+                                <h4 class="font-bold text-white">Nutrición</h4>
+                                <p class="text-sm text-gray-400">Consumo de alimentos fortificados para niños y madres.
+                                </p>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-4">
+                            <div
+                                class="w-8 h-8 rounded-full bg-cyan-500/20 flex items-center justify-center text-cyan-400 font-bold text-sm shrink-0">
+                                3</div>
+                            <div>
+                                <h4 class="font-bold text-white">Salud Mejorada</h4>
+                                <p class="text-sm text-gray-400">Reducción significativa de la anemia en la comunidad.
+                                </p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Impact Section -->
+    <section class="py-20 bg-black/20" id="impact">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center" id="metrics-container">
+                <div class="p-6">
+                    <div class="text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-b from-white to-gray-500 mb-2 metric-value"
+                        data-target="50">0</div>
+                    <p class="text-cyan-400 font-medium tracking-wider">FAMILIAS BENEFICIADAS</p>
+                </div>
+                <div class="p-6 border-y md:border-y-0 md:border-x border-white/10">
+                    <div class="text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-b from-white to-gray-500 mb-2 metric-value"
+                        data-target="1200">0</div>
+                    <p class="text-purple-400 font-medium tracking-wider">KG HORTALIZAS VENDIDAS</p>
+                </div>
+                <div class="p-6">
+                    <div
+                        class="text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-b from-white to-gray-500 mb-2 flex justify-center items-center gap-1">
+                        <span class="metric-value" data-target="30">0</span>%
+                    </div>
+                    <p class="text-lime-400 font-medium tracking-wider">REDUCCIÓN DE ANEMIA</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stories Section -->
+    <section class="py-24 overflow-hidden">
+        <div class="container mx-auto px-6 mb-12">
+            <h2 class="text-3xl font-bold">Historias de Cambio</h2>
+        </div>
+
+        <!-- Horizontal Scroll Container -->
+        <div class="flex overflow-x-auto pb-8 gap-6 px-6 snap-x snap-mandatory no-scrollbar"
+            style="-webkit-overflow-scrolling: touch;">
+            <!-- Story Card 1 -->
+            <div class="min-w-[300px] md:min-w-[400px] snap-center glass rounded-3xl p-6 flex flex-col">
+                <div class="h-48 bg-gray-700/50 rounded-2xl mb-6 overflow-hidden relative group">
+                    <!-- CAMBIAR IMAGEN AQUI: Reemplaza el src con la URL de tu imagen -->
+                    <img src="image/123.jpeg" alt="María Quispe"
+                        class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                </div>
+                <blockquote class="text-lg text-gray-200 italic mb-4">"Gracias a la informacion precisa, puedo
+                    alimentarme de mejor manera. Ahora hijo nacera fuerte."</blockquote>
+                <div class="mt-auto">
+                    <p class="font-bold text-cyan-400">María Quispe</p>
+                    <p class="text-sm text-gray-500">Productora y Madre de Familia en Saylla</p>
+                </div>
+            </div>
+
+            <!-- Story Card 2 -->
+            <div class="min-w-[300px] md:min-w-[400px] snap-center glass rounded-3xl p-6 flex flex-col">
+                <div class="h-48 bg-gray-700/50 rounded-2xl mb-6 overflow-hidden relative group">
+                    <!-- CAMBIAR IMAGEN AQUI: Reemplaza el src con la URL de tu imagen -->
+                    <img src="image/6.jpeg" alt="Juan Mamani"
+                        class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                </div>
+                <blockquote class="text-lg text-gray-200 italic mb-4">"Es un orgullo ver que nuestros jovenes
+                    estudiantes se preocupen
+                    por nuestra problematica en nuestra comunidad."</blockquote>
+                <div class="mt-auto">
+                    <p class="font-bold text-cyan-400">Juan Mamani</p>
+                    <p class="text-sm text-gray-500">Enfermero, Centro de Salud Saylla</p>
+                </div>
+            </div>
+
+            <!-- Story Card 3 -->
+            <div class="min-w-[300px] md:min-w-[400px] snap-center glass rounded-3xl p-6 flex flex-col">
+                <div class="h-48 bg-gray-700/50 rounded-2xl mb-6 overflow-hidden relative group">
+                    <!-- CAMBIAR IMAGEN AQUI: Reemplaza el src con la URL de tu imagen -->
+                    <img src="image/3.jpeg" alt="Elena Ttito"
+                        class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                </div>
+                <blockquote class="text-lg text-gray-200 italic mb-4">"La anemia estaba afectando a mi nieta. Con el
+                    programa, hemos mejorado su alimentación."</blockquote>
+                <div class="mt-auto">
+                    <p class="font-bold text-cyan-400">Elena Ttito</p>
+                    <p class="text-sm text-gray-500">Abuela de Familia</p>
+                </div>
+            </div>
+
+            <!-- Story Card 4 -->
+            <div class="min-w-[300px] md:min-w-[400px] snap-center glass rounded-3xl p-6 flex flex-col">
+                <div class="h-48 bg-gray-700/50 rounded-2xl mb-6 overflow-hidden relative group">
+                    <!-- CAMBIAR IMAGEN AQUI: Reemplaza el src con la URL de tu imagen -->
+                    <img src="image/4.jpeg" alt="Elena Ttito"
+                        class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                </div>
+                <blockquote class="text-lg text-gray-200 italic mb-4">"Como obstetra he visto el impacto directo de la
+                    anemia en embarazadas y niños. Esta plataforma conecta producción local con acceso real a alimentos
+                    ricos en hierro,
+                    facilita el seguimiento nutricional y permite que las familias compren lo que necesitan con los
+                    ingresos que generan. Es una solución práctica y escalable para mejorar la salud materno-infantil en
+                    Saylla."</blockquote>
+                <div class="mt-auto">
+                    <p class="font-bold text-cyan-400">Nathaly Maricielo</p>
+                    <p class="text-sm text-gray-500">Obstetra, Centro de Salud Saylla</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="py-24 relative" id="contact">
+        <div class="container mx-auto px-6 max-w-4xl">
+            <div class="glass rounded-3xl p-8 md:p-12 border-t border-white/20">
+                <div class="text-center mb-10">
+                    <h2 class="text-3xl font-bold mb-2">Contáctanos</h2>
+                    <p class="text-gray-400">¿Quieres ser parte del cambio? Escríbenos.</p>
+                </div>
+
+                <form class="space-y-6">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="space-y-2">
+                            <label class="text-sm font-medium text-gray-300 ml-1">Nombre</label>
+                            <input type="text"
+                                class="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all"
+                                placeholder="Tu nombre">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-sm font-medium text-gray-300 ml-1">Email</label>
+                            <input type="email"
+                                class="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all"
+                                placeholder="tucorreo@ejemplo.com">
+                        </div>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-sm font-medium text-gray-300 ml-1">Mensaje</label>
+                        <textarea rows="4"
+                            class="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all"
+                            placeholder="¿Cómo podemos ayudarte?"></textarea>
+                    </div>
+                    <button type="button"
+                        class="w-full btn-neon py-4 rounded-xl font-bold text-white shadow-lg hover:scale-[1.02] transition-transform">
+                        Enviar Mensaje
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-10 border-t border-white/5 bg-black/20">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-gray-500 text-sm">© 2025 KusiYuyay. Todos los derechos reservados.</p>
+            <p class="text-gray-600 text-xs mt-2">Diseñado con ❤️ para Saylla.</p>
+        </div>
+    </footer>
+
+    <!-- Cart Sidebar/Modal -->
+    <div id="cart-modal" class="fixed inset-0 z-[100] pointer-events-none opacity-0 transition-opacity duration-300">
+        <!-- Backdrop -->
+        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="toggleCart()"></div>
+
+        <!-- Panel -->
+        <div class="absolute right-0 top-0 h-full w-full max-w-md bg-[#0F172A] border-l border-white/10 shadow-2xl transform translate-x-full transition-transform duration-300 flex flex-col pointer-events-auto"
+            id="cart-panel">
+            <div class="p-6 border-b border-white/10 flex justify-between items-center">
+                <h2 class="text-xl font-bold">Tu Carrito</h2>
+                <button onclick="toggleCart()" class="p-2 hover:bg-white/10 rounded-full transition-colors">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+
+            <div class="flex-1 overflow-y-auto p-6 space-y-4" id="cart-items">
+                <!-- Cart Items Injected Here -->
+                <div class="text-center text-gray-500 mt-10">Tu carrito está vacío</div>
+            </div>
+
+            <div class="p-6 border-t border-white/10 bg-black/20">
+                <div class="flex justify-between items-center mb-4">
+                    <span class="text-gray-400">Total</span>
+                    <span class="text-2xl font-bold text-cyan-400" id="cart-total">S/ 0.00</span>
+                </div>
+                <button
+                    class="w-full btn-neon py-3 rounded-xl font-bold text-white shadow-lg hover:scale-[1.02] transition-transform">
+                    Proceder al Pago
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Initialize Icons
+        lucide.createIcons();
+
+        // --- Data ---
+        const products = [
+            // CAMBIAR IMAGENES AQUI: Agrega la propiedad 'imgUrl' con el enlace a tu imagen.
+            // Si 'imgUrl' está vacío, se usará el icono por defecto.
+            { id: 1, name: 'Cuy Mejorado', category: 'cuyes', price: 35.00, icon: 'rabbit', imgUrl: 'image/cuy.jpg' },
+            { id: 2, name: 'Pollo de Chacra', category: 'pollos', price: 45.00, icon: 'bird', imgUrl: 'image/pollo.jpg' },
+            { id: 3, name: 'Espinaca Orgánica (Atado)', category: 'hortalizas', price: 3.50, icon: 'leaf', imgUrl: 'image/espinaca.jpg' },
+            { id: 4, name: 'Betarraga Fresca (Kg)', category: 'hortalizas', price: 4.00, icon: 'carrot', imgUrl: 'image/beterraga.jpg' },
+            { id: 5, name: 'Galletas de Hierro', category: 'hierro', price: 2.50, icon: 'cookie', imgUrl: 'image/galleta.jpg' },
+            { id: 6, name: 'Acelga (Atado)', category: 'hortalizas', price: 3.00, icon: 'leaf', imgUrl: 'image/acelga.jpg' },
+            { id: 7, name: 'Sangrecita Precocida', category: 'hierro', price: 8.00, icon: 'droplet', imgUrl: 'image/sangrecita.jpg' },
+            { id: 8, name: 'Alverja Verde (Kg)', category: 'hortalizas', price: 6.00, icon: 'bean', imgUrl: 'image/arveja.jpg' },
+        ];
+
+        let cart = JSON.parse(localStorage.getItem('kusiyuyay_cart')) || [];
+
+        // --- DOM Elements ---
+        const productGrid = document.getElementById('product-grid');
+        const cartModal = document.getElementById('cart-modal');
+        const cartPanel = document.getElementById('cart-panel');
+        const cartItemsContainer = document.getElementById('cart-items');
+        const cartTotalElement = document.getElementById('cart-total');
+        const cartCountElement = document.getElementById('cart-count');
+        const filterButtons = document.querySelectorAll('.filter-btn');
+
+        // --- Functions ---
+
+        // Render Products
+        function renderProducts(filter = 'all') {
+            productGrid.innerHTML = '';
+
+            const filtered = filter === 'all'
+                ? products
+                : products.filter(p => p.category === filter);
+
+            filtered.forEach(product => {
+                const card = document.createElement('div');
+                card.className = 'glass-card rounded-3xl p-6 flex flex-col relative overflow-hidden group';
+
+                // Logic to choose between Image or Icon
+                let imageContent;
+                if (product.imgUrl) {
+                    imageContent = `
+                        <div class="h-40 w-full mb-4 rounded-2xl overflow-hidden relative">
+                            <img src="${product.imgUrl}" alt="${product.name}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                            <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors"></div>
+                        </div>
+                    `;
+                } else {
+                    imageContent = `
+                        <div class="h-40 bg-white/5 rounded-2xl mb-4 flex items-center justify-center relative z-10">
+                            <i data-lucide="${product.icon}" class="w-16 h-16 text-cyan-300"></i>
+                        </div>
+                    `;
+                }
+
+                card.innerHTML = `
+                    ${imageContent}
+                    <div class="relative z-10">
+                        <span class="text-xs font-bold text-cyan-500 uppercase tracking-wider mb-1 block">${product.category}</span>
+                        <h3 class="text-xl font-bold mb-2">${product.name}</h3>
+                        <div class="flex justify-between items-end mt-4">
+                            <span class="text-2xl font-bold text-white">S/ ${product.price.toFixed(2)}</span>
+                            <button onclick="addToCart(${product.id})" class="bg-white/10 hover:bg-cyan-500 hover:text-white text-cyan-400 p-3 rounded-xl transition-all active:scale-95">
+                                <i data-lucide="plus" class="w-5 h-5"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                productGrid.appendChild(card);
+            });
+            lucide.createIcons();
+        }
+
+        // Filter Logic
+        function filterProducts(category) {
+            filterButtons.forEach(btn => {
+                btn.classList.remove('border-cyan-500/50', 'text-cyan-300');
+                btn.classList.add('text-gray-300');
+            });
+
+            // Find active button (simple way)
+            const activeBtn = Array.from(filterButtons).find(b => b.getAttribute('onclick').includes(category));
+            if (activeBtn) {
+                activeBtn.classList.remove('text-gray-300');
+                activeBtn.classList.add('border-cyan-500/50', 'text-cyan-300');
+            }
+
+            renderProducts(category);
+        }
+
+        // Cart Logic
+        function toggleCart() {
+            const isOpen = cartModal.classList.contains('opacity-100');
+            if (isOpen) {
+                cartModal.classList.remove('opacity-100', 'pointer-events-auto');
+                cartModal.classList.add('opacity-0', 'pointer-events-none');
+                cartPanel.classList.add('translate-x-full');
+            } else {
+                cartModal.classList.remove('opacity-0', 'pointer-events-none');
+                cartModal.classList.add('opacity-100', 'pointer-events-auto');
+                cartPanel.classList.remove('translate-x-full');
+            }
+        }
+
+        function addToCart(id) {
+            const product = products.find(p => p.id === id);
+            const existing = cart.find(item => item.id === id);
+
+            if (existing) {
+                existing.quantity++;
+            } else {
+                cart.push({ ...product, quantity: 1 });
+            }
+
+            updateCart();
+
+            // Micro-interaction feedback could go here
+        }
+
+        function removeFromCart(id) {
+            cart = cart.filter(item => item.id !== id);
+            updateCart();
+        }
+
+        function updateQuantity(id, change) {
+            const item = cart.find(item => item.id === id);
+            if (item) {
+                item.quantity += change;
+                if (item.quantity <= 0) removeFromCart(id);
+                else updateCart();
+            }
+        }
+
+        function updateCart() {
+            localStorage.setItem('kusiyuyay_cart', JSON.stringify(cart));
+
+            // Update Count
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartCountElement.innerText = totalItems;
+            cartCountElement.classList.toggle('opacity-0', totalItems === 0);
+
+            // Render Items
+            cartItemsContainer.innerHTML = '';
+            let total = 0;
+
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = '<div class="text-center text-gray-500 mt-10">Tu carrito está vacío</div>';
+            } else {
+                cart.forEach(item => {
+                    total += item.price * item.quantity;
+                    const el = document.createElement('div');
+                    el.className = 'flex items-center gap-4 bg-white/5 p-3 rounded-xl';
+                    el.innerHTML = `
+                        <div class="w-16 h-16 bg-black/20 rounded-lg flex items-center justify-center shrink-0 overflow-hidden">
+                            ${item.imgUrl
+                            ? `<img src="${item.imgUrl}" class="w-full h-full object-cover">`
+                            : `<i data-lucide="${item.icon}" class="text-gray-400"></i>`
+                        }
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="font-bold text-sm text-white">${item.name}</h4>
+                            <p class="text-cyan-400 text-sm">S/ ${item.price.toFixed(2)}</p>
+                        </div>
+                        <div class="flex items-center gap-2 bg-black/20 rounded-lg p-1">
+                            <button onclick="updateQuantity(${item.id}, -1)" class="p-1 hover:text-white text-gray-400 transition-colors">-</button>
+                            <span class="text-sm w-4 text-center">${item.quantity}</span>
+                            <button onclick="updateQuantity(${item.id}, 1)" class="p-1 hover:text-white text-gray-400 transition-colors">+</button>
+                        </div>
+                    `;
+                    cartItemsContainer.appendChild(el);
+                });
+            }
+            lucide.createIcons();
+
+            // Update Total
+            cartTotalElement.innerText = `S/ ${total.toFixed(2)}`;
+        }
+
+        // --- Animations & Effects ---
+
+        // Navbar Scroll Effect
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.classList.add('bg-[#0F172A]/80', 'backdrop-blur-md', 'border-b', 'border-white/5');
+            } else {
+                nav.classList.remove('bg-[#0F172A]/80', 'backdrop-blur-md', 'border-b', 'border-white/5');
+            }
+        });
+
+        // Parallax Effect
+        document.addEventListener('mousemove', (e) => {
+            const elements = document.querySelectorAll('.parallax-el');
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+
+            elements.forEach(el => {
+                const speed = el.getAttribute('data-speed');
+                const xOffset = (window.innerWidth / 2 - e.clientX) * speed;
+                const yOffset = (window.innerHeight / 2 - e.clientY) * speed;
+                el.style.transform = `translate(${xOffset}px, ${yOffset}px)`;
+            });
+        });
+
+        // Metrics Intersection Observer
+        const observerOptions = {
+            threshold: 0.5
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const counters = entry.target.querySelectorAll('.metric-value');
+                    counters.forEach(counter => {
+                        const target = +counter.getAttribute('data-target');
+                        const duration = 2000; // ms
+                        const increment = target / (duration / 16); // 60fps
+
+                        let current = 0;
+                        const updateCounter = () => {
+                            current += increment;
+                            if (current < target) {
+                                counter.innerText = Math.ceil(current);
+                                requestAnimationFrame(updateCounter);
+                            } else {
+                                counter.innerText = target;
+                            }
+                        };
+                        updateCounter();
+                    });
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        const metricsContainer = document.getElementById('metrics-container');
+        if (metricsContainer) observer.observe(metricsContainer);
+
+        // --- Initialization ---
+        renderProducts();
+        updateCart();
+
+    </script>
+</body>
+
+</html>
